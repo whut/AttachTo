@@ -44,7 +44,7 @@
          must be a menu. -->
     <Groups>
 
-      <Group guid="guidAttachToCmdSet" id="MyMenuGroup" priority="0x0600">
+      <Group guid="guidAttachToCmdSet" id="WhutAttachToMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
       </Group>
       
@@ -65,7 +65,7 @@
           If you do not want an image next to your command, remove the Icon node or set it to <Icon guid="guidOfficeIcon" id="msotcidNoIcon" /> -->
 
       <Button guid="guidAttachToCmdSet" id="cmdidWhutAttachToIIS" priority="0x0100" type="Button">
-        <Parent guid="guidAttachToCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidAttachToCmdSet" id="WhutAttachToMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <CommandName>cmdidWhutAttachToIIS</CommandName>
@@ -101,7 +101,7 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidAttachToCmdSet" value="{16e2ac5c-ec3d-4ff1-a237-11ccef54fe0f}">
 
-      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="WhutAttachToMenuGroup" value="0x1020" />
       <IDSymbol name="cmdidWhutAttachToIIS" value="0x0100" />
     </GuidSymbol>
     
