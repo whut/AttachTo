@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using EnvDTE;
@@ -25,6 +26,7 @@ namespace Whut.AttachTo
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(GuidList.guidAttachToPkgString)]
+    [ProvideOptionPage(typeof(GeneralOptionsPage), "Whut.AttachTo", "General", 110, 120, false)]
     public sealed class AttachToPackage : Package
     {
         /// <summary>
@@ -35,15 +37,17 @@ namespace Whut.AttachTo
         {
             base.Initialize();
 
-            // Add our command handlers for menu (commands must exist in the .vsct file)
             OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (null != mcs)
-            {
-                // Create the command for the menu item.
-                CommandID attachToIISMenuCommandID = new CommandID(GuidList.guidAttachToCmdSet, (int)PkgCmdIDList.cmdidWhutAttachToIIS);
-                MenuCommand attachToIISMenuItem = new MenuCommand(AttachToIISMenuItemCallback, attachToIISMenuCommandID);
-                mcs.AddCommand(attachToIISMenuItem);
-            }
+
+            CommandID attachToIISMenuCommandID = new CommandID(GuidList.guidAttachToCmdSet, (int)PkgCmdIDList.cmdidWhutAttachToIIS);
+            OleMenuCommand attachToIISMenuItem = new OleMenuCommand(AttachToIISMenuItemCallback, attachToIISMenuCommandID);
+            attachToIISMenuItem.BeforeQueryStatus += (s, e) => attachToIISMenuItem.Visible = ((GeneralOptionsPage)this.GetDialogPage(typeof(GeneralOptionsPage))).ShowAttachToIIS;
+            mcs.AddCommand(attachToIISMenuItem);
+
+            CommandID attachToNUnitMenuCommandID = new CommandID(GuidList.guidAttachToCmdSet, (int)PkgCmdIDList.cmdidWhutAttachToNUnit);
+            OleMenuCommand attachToNUnitMenuItem = new OleMenuCommand(AttachToNUnitMenuItemCallback, attachToNUnitMenuCommandID);
+            attachToNUnitMenuItem.BeforeQueryStatus += (s, e) => attachToNUnitMenuItem.Visible = ((GeneralOptionsPage)this.GetDialogPage(typeof(GeneralOptionsPage))).ShowAttachToNUnit;
+            mcs.AddCommand(attachToNUnitMenuItem);
         }
 
         private void AttachToIISMenuItemCallback(object sender, EventArgs e)
@@ -58,5 +62,34 @@ namespace Whut.AttachTo
             }
         }
 
+        private void AttachToNUnitMenuItemCallback(object sender, EventArgs e)
+        {
+            // NUnit runs test in nunit.exe or in separate process, nunit-agent.exe - it depends on configuration, target framework version, etc.
+            // Code below attaches to nunit-agent.exe processes, but when it can't find any, it attaches to nunit.exe as fallback
+            DTE dte = (DTE)this.GetService(typeof(DTE));
+            List<Process> nunitProcesses = new List<Process>();
+            bool nunitAgentFound = false;
+            foreach (Process process in dte.Debugger.LocalProcesses)
+            {
+                if (process.Name.EndsWith("nunit-agent.exe"))
+                {
+                    process.Attach();
+                    nunitAgentFound = true;
+                }
+
+                if (process.Name.EndsWith("nunit.exe"))
+                {
+                    nunitProcesses.Add(process);
+                }
+            }
+
+            if (!nunitAgentFound)
+            {
+                foreach (Process process in nunitProcesses)
+                {
+                    process.Attach();
+                }
+            }
+        }
     }
 }

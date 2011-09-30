@@ -23,9 +23,6 @@
   <!--Definition of some VSCT specific constants. In this sample we use it for the IDs inside the guidOfficeIcon group. -->
   <Extern href="msobtnid.h"/>
 
-
-
-
   <!--The Commands section is where we the commands, menus and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
   <Commands package="guidAttachToPkg">
@@ -36,20 +33,15 @@
     called "command set" and is used to group different command inside a logically related  
     group; your package should define its own command set in order to avoid collisions  
     with command ids defined by other packages. -->
-
     
     <!-- In this section you can define new menu groups. A menu group is a container for 
          other menus or buttons (commands); from a visual point of view you can see the 
          group as the part of a menu contained between two lines. The parent of a group 
          must be a menu. -->
     <Groups>
-
       <Group guid="guidAttachToCmdSet" id="WhutAttachToMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
       </Group>
-      
-
-
     </Groups>
     
     <!--Buttons section. -->
@@ -63,18 +55,25 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node or set it to <Icon guid="guidOfficeIcon" id="msotcidNoIcon" /> -->
-
       <Button guid="guidAttachToCmdSet" id="cmdidWhutAttachToIIS" priority="0x0100" type="Button">
         <Parent guid="guidAttachToCmdSet" id="WhutAttachToMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>cmdidWhutAttachToIIS</CommandName>
           <ButtonText>Attach to IIS</ButtonText>
         </Strings>
       </Button>
 
-
-
+      <Button guid="guidAttachToCmdSet" id="cmdidWhutAttachToNUnit" priority="0x0100" type="Button">
+        <Parent guid="guidAttachToCmdSet" id="WhutAttachToMenuGroup" />
+        <Icon guid="guidImages" id="bmpPic1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <CommandName>cmdidWhutAttachToNUnit</CommandName>
+          <ButtonText>Attach to NUnit</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
    
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -85,14 +84,8 @@
             inside a button definition. An important aspect of this declaration is that the element id 
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
       <Bitmap guid="guidImages" href="Resources\Images_32bit.bmp" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
-
     </Bitmaps>
- 
   </Commands>
-
-
-
-
 
   <Symbols>
     <!-- This is the package guid. -->
@@ -100,12 +93,10 @@
     
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidAttachToCmdSet" value="{16e2ac5c-ec3d-4ff1-a237-11ccef54fe0f}">
-
       <IDSymbol name="WhutAttachToMenuGroup" value="0x1020" />
       <IDSymbol name="cmdidWhutAttachToIIS" value="0x0100" />
+      <IDSymbol name="cmdidWhutAttachToNUnit" value="0x0101" />
     </GuidSymbol>
-    
-    
     
     <GuidSymbol name="guidImages" value="{7cecfc21-6262-422a-93dd-223db26a763c}" >
       <IDSymbol name="bmpPic1" value="1" />
@@ -115,5 +106,4 @@
       <IDSymbol name="bmpPicArrows" value="5" />
     </GuidSymbol>
   </Symbols>
-
 </CommandTable>

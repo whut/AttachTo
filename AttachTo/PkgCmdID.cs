@@ -1,13 +1,12 @@
 ﻿// PkgCmdID.cs
 // MUST match PkgCmdID.h
-using System;
 
 namespace Whut.AttachTo
 {
-    static class PkgCmdIDList
+    public static class PkgCmdIDList
     {
-        public const uint cmdidWhutAttachToIIS =        0x100;
+        public const uint cmdidWhutAttachToIIS = 0x100;
 
-
+        public const uint cmdidWhutAttachToNUnit = 0x101;
     };
 }
