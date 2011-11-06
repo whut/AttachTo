@@ -10,5 +10,5 @@ namespace Whut.AttachTo
         public const uint cmdidWhutAttachToIISExpress = 0x101;
 
         public const uint cmdidWhutAttachToNUnit = 0x102;
-    };
+    }
 }

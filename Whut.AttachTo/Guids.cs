@@ -11,5 +11,5 @@ namespace Whut.AttachTo
         public const string guidAttachToCmdSetString = "16e2ac5c-ec3d-4ff1-a237-11ccef54fe0f";
 
         public static readonly Guid guidAttachToCmdSet = new Guid(guidAttachToCmdSetString);
-    };
+    }
 }
