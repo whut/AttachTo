@@ -4,7 +4,7 @@
     <Name>AttachTo</Name>
     <Author>Whut</Author>
     <Version>1.0</Version>
-    <Description xml:space="preserve">Adds "Attach to IIS" and "Attach to NUnit" Tools menu commands.</Description>
+    <Description xml:space="preserve">Adds "Attach to IIS/IIS Express/NUnit" commands to Tools menu.</Description>
     <Locale>1033</Locale>
     <InstalledByMsi>false</InstalledByMsi>
     <SupportedProducts>
@@ -15,9 +15,9 @@
     <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
   </Identifier>
   <References>
-        <Reference Id="Microsoft.VisualStudio.MPF" MinVersion="10.0">
-            <Name>Visual Studio MPF</Name>
-        </Reference>
+    <Reference Id="Microsoft.VisualStudio.MPF" MinVersion="10.0">
+      <Name>Visual Studio MPF</Name>
+    </Reference>
   </References>
   <Content>
     <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>

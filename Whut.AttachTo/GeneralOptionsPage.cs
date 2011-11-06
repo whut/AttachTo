@@ -8,6 +8,7 @@ namespace Whut.AttachTo
         public GeneralOptionsPage()
         {
             this.ShowAttachToIIS = true;
+            this.ShowAttachToIISExpress = true;
             this.ShowAttachToNUnit = true;
         }
 
@@ -16,6 +17,12 @@ namespace Whut.AttachTo
         [Description("Show 'Attach to IIS' command in Tools menu.")]
         [DefaultValue(true)]
         public bool ShowAttachToIIS { get; set; }
+
+        [Category("General")]
+        [DisplayName("Show 'Attach to IIS Express command")]
+        [Description("Show 'Attach to IIS Express command in Tools menu.")]
+        [DefaultValue(true)]
+        public bool ShowAttachToIISExpress { get; set; }
 
         [Category("General")]
         [DisplayName("Show 'Attach to NUnit' command")]

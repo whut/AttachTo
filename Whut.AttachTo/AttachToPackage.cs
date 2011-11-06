@@ -38,12 +38,29 @@ namespace Whut.AttachTo
             base.Initialize();
 
             OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            AddAttachToIISCommand(mcs);
+            AddAttachToIISExpressCommand(mcs);
+            AddAttachToNUnitCommand(mcs);
+        }
 
+        private void AddAttachToIISCommand(OleMenuCommandService mcs)
+        {
             CommandID attachToIISMenuCommandID = new CommandID(GuidList.guidAttachToCmdSet, (int)PkgCmdIDList.cmdidWhutAttachToIIS);
             OleMenuCommand attachToIISMenuItem = new OleMenuCommand(AttachToIISMenuItemCallback, attachToIISMenuCommandID);
             attachToIISMenuItem.BeforeQueryStatus += (s, e) => attachToIISMenuItem.Visible = ((GeneralOptionsPage)this.GetDialogPage(typeof(GeneralOptionsPage))).ShowAttachToIIS;
             mcs.AddCommand(attachToIISMenuItem);
+        }
 
+        private void AddAttachToIISExpressCommand(OleMenuCommandService mcs)
+        {
+            CommandID attachToIISExpressMenuCommandID = new CommandID(GuidList.guidAttachToCmdSet, (int)PkgCmdIDList.cmdidWhutAttachToIISExpress);
+            OleMenuCommand attachToIISExpressMenuItem = new OleMenuCommand(AttachToIISExpressMenuItemCallback, attachToIISExpressMenuCommandID);
+            attachToIISExpressMenuItem.BeforeQueryStatus += (s, e) => attachToIISExpressMenuItem.Visible = ((GeneralOptionsPage)this.GetDialogPage(typeof(GeneralOptionsPage))).ShowAttachToIISExpress;
+            mcs.AddCommand(attachToIISExpressMenuItem);
+        }
+
+        private void AddAttachToNUnitCommand(OleMenuCommandService mcs)
+        {
             CommandID attachToNUnitMenuCommandID = new CommandID(GuidList.guidAttachToCmdSet, (int)PkgCmdIDList.cmdidWhutAttachToNUnit);
             OleMenuCommand attachToNUnitMenuItem = new OleMenuCommand(AttachToNUnitMenuItemCallback, attachToNUnitMenuCommandID);
             attachToNUnitMenuItem.BeforeQueryStatus += (s, e) => attachToNUnitMenuItem.Visible = ((GeneralOptionsPage)this.GetDialogPage(typeof(GeneralOptionsPage))).ShowAttachToNUnit;
@@ -56,6 +73,18 @@ namespace Whut.AttachTo
             foreach (Process process in dte.Debugger.LocalProcesses)
             {
                 if (process.Name.EndsWith("w3wp.exe"))
+                {
+                    process.Attach();
+                }
+            }
+        }
+
+        private void AttachToIISExpressMenuItemCallback(object sender, EventArgs e)
+        {
+            DTE dte = (DTE)this.GetService(typeof(DTE));
+            foreach (Process process in dte.Debugger.LocalProcesses)
+            {
+                if (process.Name.EndsWith("iisexpress.exe"))
                 {
                     process.Attach();
                 }
