@@ -6,6 +6,9 @@
     <Version>1.0.1</Version>
     <Description xml:space="preserve">Adds "Attach to IIS/IIS Express/NUnit" commands to Tools menu.</Description>
     <Locale>1033</Locale>
+    <MoreInfoUrl>https://github.com/whut/AttachTo</MoreInfoUrl>
+    <License>license.txt</License>
+    <PreviewImage>preview.jpg</PreviewImage>
     <InstalledByMsi>false</InstalledByMsi>
     <SupportedProducts>
       <VisualStudio Version="10.0">
