@@ -1,0 +1,7 @@
+Adds "Attach to IIS", "Attach to IIS Express" and "Attach to NUnit" commands to Tools menu.
+
+Now you can start debugging web site hosted in local IIS server or failing NUnit test quicker than before:) 
+
+AttachTo extension provides options to hide commands not relevant to you. You can also assign shortcut using Tools -> Options -> Keyboard.
+
+Visual Studio Gallery homepage: http://visualstudiogallery.msdn.microsoft.com/d0265ab0-df51-4100-8e10-1f84403c4cd0

@@ -1,0 +1,10 @@
+AttachTo v1.0.1 - 2012-02-08
+ - Fixed that show/hide menu commands where not applied immediately after Visual Studio restart
+ - Added attaching also to nunit-console.exe process, and x86 counterparts of all NUnit processes
+ - Added license terms to project
+ - Added license terms, preview image and url to extension package
+ - Added experimental support for Visual Studio 2011
+
+AttachTo v1.0.0 - 2011-11-06
+ - Tools menu commands to attach to IIS, IIS Express and NUnit
+ - Ability to show/hide the menu commands
