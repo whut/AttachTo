@@ -1,0 +1,2 @@
+plik licencji wygl¹da dziwnie
+dodaæ Tool1, Tool2, Tool3, etc
