@@ -9,7 +9,8 @@
     <MoreInfoUrl>https://github.com/whut/AttachTo</MoreInfoUrl>
     <License>license.txt</License>
     <GettingStartedGuide>http://visualstudiogallery.msdn.microsoft.com/d0265ab0-df51-4100-8e10-1f84403c4cd0</GettingStartedGuide>
-    <PreviewImage>preview.jpg</PreviewImage>
+    <PreviewImage>preview.png</PreviewImage>
+    <Icon>icon.png</Icon>
     <InstalledByMsi>false</InstalledByMsi>
     <SupportedProducts>
       <VisualStudio Version="10.0">
