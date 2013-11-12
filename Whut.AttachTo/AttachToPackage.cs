@@ -1,16 +1,22 @@
-﻿using System;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Runtime.InteropServices;
-using EnvDTE;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell;
-
-namespace Whut.AttachTo
+﻿namespace Whut.AttachTo
 {
+    using System;
+    using System.ComponentModel.Design;
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+
+    using EnvDTE;
+
+    using Microsoft.VisualStudio;
+    using Microsoft.VisualStudio.Shell;
+
+    /// <summary>
+    ///     Class AttachToPackage. This class cannot be inherited.
+    /// </summary>
     //// This attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class is a package.
     [PackageRegistration(UseManagedResourcesOnly = true)]
-    //// This attribute is used to register the informations needed to show the this package in the Help/About dialog of Visual Studio.
+    //// This attribute is used to register the information needed to show the this package in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     //// This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource("Menus.ctmenu", 1)]
@@ -20,34 +26,77 @@ namespace Whut.AttachTo
     [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string)]
     public sealed class AttachToPackage : Package
     {
+        #region Methods
+
+        /// <summary>
+        ///     Initializes this instance.
+        /// </summary>
         protected override void Initialize()
         {
             base.Initialize();
 
-            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var oleMenuCommandService = this.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
 
-            this.AddAttachToCommand(mcs, PkgCmdIDList.cmdidWhutAttachToIIS, gop => gop.ShowAttachToIIS, "w3wp.exe");
-            this.AddAttachToCommand(mcs, PkgCmdIDList.cmdidWhutAttachToIISExpress, gop => gop.ShowAttachToIISExpress, "iisexpress.exe");
-            this.AddAttachToCommand(mcs, PkgCmdIDList.cmdidWhutAttachToNUnit, gop => gop.ShowAttachToNUnit, "nunit-agent.exe", "nunit.exe", "nunit-console.exe", "nunit-agent-x86.exe", "nunit-x86.exe", "nunit-console-x86.exe");
+            this.AddAttachToCommand(oleMenuCommandService, PkgCmdIDList.cmdidWhutAttachToIIS, gop => gop.ShowAttachToIIS, "w3wp.exe");
+            this.AddAttachToCommand(
+                oleMenuCommandService, 
+                PkgCmdIDList.cmdidWhutAttachToIISExpress, 
+                gop => gop.ShowAttachToIISExpress, 
+                "iisexpress.exe");
+            this.AddAttachToCommand(
+                oleMenuCommandService, 
+                PkgCmdIDList.cmdidWhutAttachToNUnit, 
+                gop => gop.ShowAttachToNUnit, 
+                "nunit-agent.exe", 
+                "nunit.exe", 
+                "nunit-console.exe", 
+                "nunit-agent-x86.exe", 
+                "nunit-x86.exe", 
+                "nunit-console-x86.exe");
         }
 
-        private void AddAttachToCommand(OleMenuCommandService mcs, uint commandId, Func<GeneralOptionsPage, bool> isVisible, params string[] programsToAttach)
+        /// <summary>
+        /// Adds the attach automatic command.
+        /// </summary>
+        /// <param name="oleMenuCommandService">
+        /// The MCS.
+        /// </param>
+        /// <param name="commandId">
+        /// The command unique identifier.
+        /// </param>
+        /// <param name="isVisible">
+        /// The is visible.
+        /// </param>
+        /// <param name="programsToAttach">
+        /// The programs automatic attach.
+        /// </param>
+        private void AddAttachToCommand(
+            OleMenuCommandService oleMenuCommandService, 
+            uint commandId, 
+            Func<GeneralOptionsPage, bool> isVisible, 
+            params string[] programsToAttach)
         {
-            OleMenuCommand menuItemCommand = new OleMenuCommand(
-                delegate(object sender, EventArgs e)
-                {
-                    DTE dte = (DTE)this.GetService(typeof(DTE));
-                    foreach (Process process in dte.Debugger.LocalProcesses)
+            Contract.Requires<ArgumentNullException>(oleMenuCommandService != null);
+
+            var menuItemCommand = new OleMenuCommand(
+                delegate
                     {
-                        if (programsToAttach.Any(p => process.Name.EndsWith(p)))
+                        var dte = (DTE)this.GetService(typeof(DTE));
+                        foreach (
+                            var process in
+                                dte.Debugger.LocalProcesses.Cast<Process>()
+                                    .Where(process => programsToAttach.Any(p => process.Name.EndsWith(p))))
                         {
                             process.Attach();
                         }
-                    }
-                },
+                    }, 
                 new CommandID(GuidList.guidAttachToCmdSet, (int)commandId));
-            menuItemCommand.BeforeQueryStatus += (s, e) => menuItemCommand.Visible = isVisible((GeneralOptionsPage)this.GetDialogPage(typeof(GeneralOptionsPage)));
-            mcs.AddCommand(menuItemCommand);
+            menuItemCommand.BeforeQueryStatus +=
+                (s, e) =>
+                menuItemCommand.Visible = isVisible((GeneralOptionsPage)this.GetDialogPage(typeof(GeneralOptionsPage)));
+            oleMenuCommandService.AddCommand(menuItemCommand);
         }
+
+        #endregion
     }
 }
