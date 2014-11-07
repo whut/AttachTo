@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.postsharp.org/1.0/configuration" xmlns:dg="clr-namespace:PostSharp.Patterns.Diagnostics;assembly:PostSharp.Patterns.Diagnostics">
+  <Using File="..\packages\PostSharp.Patterns.Diagnostics.3.0.40\tools\PostSharp.Patterns.Diagnostics.Weaver.dll" />
+  <Property Name="LoggingBackend" Value="Console" />
+  <dg:LoggingProfiles>
+    <dg:LoggingProfile Name="Default" OnExceptionLevel="Info" />
+  </dg:LoggingProfiles>
+</Project>
