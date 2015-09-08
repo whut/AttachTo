@@ -1,14 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+<<<<<<< Updated upstream
   <Identifier Id="8d6080f0-7276-44d7-8dc4-6378fb6ce225">
     <Name>AttachTo</Name>
     <Author>Whut</Author>
     <Version>1.0.1</Version>
+=======
+  <Identifier Id="A7E222F8-5841-484D-9C8D-2A88619F0153">
+    <Name>AttachTo-Next</Name>
+    <Author>Whut,ziyasal</Author>
+    <Version>1.0.3</Version>
+>>>>>>> Stashed changes
     <Description xml:space="preserve">Adds "Attach to IIS/IIS Express/NUnit" commands to Tools menu. Every command can be hidden or assigned shortcut.</Description>
     <Locale>1033</Locale>
     <MoreInfoUrl>https://github.com/whut/AttachTo</MoreInfoUrl>
     <License>license.txt</License>
-    <GettingStartedGuide>http://visualstudiogallery.msdn.microsoft.com/d0265ab0-df51-4100-8e10-1f84403c4cd0</GettingStartedGuide>
+    <GettingStartedGuide>https://visualstudiogallery.msdn.microsoft.com/494a7e91-4ed4-4ba6-982d-b21141e46dff</GettingStartedGuide>
     <PreviewImage>preview.jpg</PreviewImage>
     <InstalledByMsi>false</InstalledByMsi>
     <SupportedProducts>
@@ -18,8 +25,11 @@
       <VisualStudio Version="11.0">
         <Edition>Pro</Edition>
       </VisualStudio>
+      <VisualStudio Version="14.0">
+        <Edition>Pro</Edition>
+      </VisualStudio>
     </SupportedProducts>
-    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.5.2" />
   </Identifier>
   <References>
     <Reference Id="Microsoft.VisualStudio.MPF" MinVersion="10.0">
